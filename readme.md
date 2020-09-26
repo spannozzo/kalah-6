@@ -1,10 +1,10 @@
 # Kalah 6
 
-Creation of a rest game with open document 3.
+Creation of a rest game with docker, spring boot, swagger, open document 3, and mongodb.
 
 ## Description
 
-Mancalah / Kalah REST game with six tokens for each pits, instead of four.
+Mancala / Kalah REST game with six tokens for each pits, instead of four.
 
 ## Getting Started
 
