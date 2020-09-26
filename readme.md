@@ -1,6 +1,6 @@
 # Kalah 6
 
-Creation of a rest game with docker, spring boot, swagger, open document 3, and mongodb.
+Creation of a rest game with docker, spring boot, swagger, open API 3, and mongodb.
 
 ## Description
 
