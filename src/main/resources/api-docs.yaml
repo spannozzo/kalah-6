@@ -1,0 +1,209 @@
+openapi: 3.0.1
+info:
+  title: Kalah Coding Challenge
+  description: Lorem ipsum
+  termsOfService: http://swagger.io/terms/
+  license:
+    name: Apache 2.0
+    url: http://springdoc.org
+  version: 1.2.32
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /games/{gameId}/pits/{pitId}:
+    put:
+      tags:
+      - game-controller
+      summary: "make a move. It empties the selected pit for a specif game id, and\
+        \ perform the game by using Kalah rules"
+      operationId: makeAMove
+      parameters:
+      - name: gameId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pitId
+        in: path
+        required: true
+        schema:
+          maximum: 14
+          minimum: 1
+          type: integer
+          format: int32
+      responses:
+        "400":
+          description: Invalid game id supplied
+        "404":
+          description: game not found
+        "200":
+          description: move done
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Move Response'
+  /games/{id}:
+    get:
+      tags:
+      - game-controller
+      summary: get game by id and retrieves a rapresentation of its status
+      operationId: getGame
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "400":
+          description: Invalid id supplied
+        "404":
+          description: game not found
+        "200":
+          description: game found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game Status Response'
+  /games:
+    post:
+      tags:
+      - game-controller
+      summary: create a game and return its id
+      operationId: gamePost
+      responses:
+        "400":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+        "404":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+        "201":
+          description: game created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game Creation Response'
+components:
+  schemas:
+    Move Response:
+      required:
+      - id
+      - status
+      - url
+      type: object
+      properties:
+        id:
+          type: string
+          description: game id
+          example: "123"
+        url:
+          type: string
+          description: url for retrieving game
+          example: http://<host>:<port>/games/1234
+        status:
+          type: object
+          additionalProperties:
+            type: string
+            description: pits of the game
+            example: "{\"1\":\"4\",\"2\":\"4\",\"3\":\"4\",\"4\":\"4\",\"5\":\"4\"\
+              ,\"6\":\"4\",\"7\":\"0\",\"8\":\"4\",\"9\":\"4\",\"10\":\"4\",\"11\"\
+              :\"4\",\"12\":\"4\",\"13\":\"4\",\"14\":\"0\"}"
+          description: pits of the game
+          example:
+            "1": "4"
+            "2": "4"
+            "3": "4"
+            "4": "4"
+            "5": "4"
+            "6": "4"
+            "7": "0"
+            "8": "4"
+            "9": "4"
+            "10": "4"
+            "11": "4"
+            "12": "4"
+            "13": "4"
+            "14": "0"
+      description: "it return game id, game url, and status of the pits"
+    Game Status Response:
+      required:
+      - id
+      - score
+      - status
+      - turn
+      - winner
+      type: object
+      properties:
+        id:
+          type: string
+          description: game id
+          example: "123"
+        status:
+          type: object
+          additionalProperties:
+            type: string
+            description: pits of the game
+            example: "{\"1\":\"4\",\"2\":\"4\",\"3\":\"4\",\"4\":\"4\",\"5\":\"4\"\
+              ,\"6\":\"4\",\"7\":\"0\",\"8\":\"4\",\"9\":\"4\",\"10\":\"4\",\"11\"\
+              :\"4\",\"12\":\"4\",\"13\":\"4\",\"14\":\"0\"}"
+          description: pits of the game
+          example:
+            "1": "4"
+            "2": "4"
+            "3": "4"
+            "4": "4"
+            "5": "4"
+            "6": "4"
+            "7": "0"
+            "8": "4"
+            "9": "4"
+            "10": "4"
+            "11": "4"
+            "12": "4"
+            "13": "4"
+            "14": "0"
+        turn:
+          type: string
+          description: Next turn
+          example: Player 1
+          enum:
+          - Player 1
+          - Player 2
+        score:
+          type: string
+          description: Score
+          example: 0 — 0
+        winner:
+          type: string
+          description: Winner
+          example: Player 2
+          enum:
+          - Player 1
+          - Player 2
+          - ""
+      description: response describing the status of a retrieved game
+    Game Creation Response:
+      required:
+      - id
+      - uri
+      type: object
+      properties:
+        id:
+          type: string
+          description: game id
+          example: "123"
+        uri:
+          type: string
+          description: url for retrieving game
+          example: http://<host>:<port>/games/1234
+      description: response for when game is created

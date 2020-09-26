@@ -1,0 +1,40 @@
+version: "3"
+services:
+  app:
+    restart: always
+    image: kalah
+    container_name: "kalah-app"
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - spring.data.mongodb.uri=mongodb://root:1234@db:27017/kalah 
+    ports:
+      - '8080:8080'
+      - '5005:5005'
+    expose:
+      - '8080'
+      - '5005'
+    depends_on:
+      - "db"
+    networks:
+      - kalah-network
+  db:
+    restart: always
+    image: bitnami/mongodb:latest
+    environment:
+      MONGODB_USERNAME: 'root'
+      MONGODB_PASSWORD: '1234'
+      MONGODB_DATABASE: 'kalah'
+    container_name: kalah-db
+    ports:
+      - '27017:27017'
+    expose:
+      - '27017'
+    networks:
+      - kalah-network
+
+networks:
+  kalah-network:
+    external: false
+    
