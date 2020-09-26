@@ -4,7 +4,7 @@ Creation of a rest game with docker, spring boot, swagger, open API 3, and mongo
 
 ## Description
 
-Mancala / Kalah REST game with six tokens for each pits, instead of four.
+Mancala / Kalah REST game with six tokens for each pit, instead of four of the classic versions.
 
 ## Getting Started
 
