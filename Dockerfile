@@ -1,4 +1,4 @@
-FROM openjdk:11.0.9.1-oraclelinux8
+FROM openjdk:11.0.12-oraclelinux8
 EXPOSE 8080 5005
 COPY ./target /opt/target
 WORKDIR /opt/target
